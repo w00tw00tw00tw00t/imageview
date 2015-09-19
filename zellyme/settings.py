@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     "django_extensions",
     'imagekit',
     "taggit",
+    'taggit_helpers',
     "bootstrap3",
 
     # MY APPS
