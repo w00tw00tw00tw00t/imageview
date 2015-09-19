@@ -1,30 +1,20 @@
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.views.generic.edit import FormView
+from django.views.generic import ListView
+from .forms import ImageForm
+from .models import Image
 
-from .models import Imageview
-from .forms import ImageviewForm
 
-def list(request):
-    # Handle file upload
-    if request.method == 'POST':
-        form = ImageviewForm(request.POST, request.FILES)
-        if form.is_valid():
-            newimage = Imageview(imagefile = request.FILES['imagefile'])
-            newimage.save()
+class UploadView(FormView):
+    template_name = 'imageview/upload.html'
+    form_class = ImageForm
+    success_url = '/'
 
-            # Redirect to the document list after POST
-            return HttpResponseRedirect(reverse('imageview.views.list'))
-    else:
-        form = DocumentForm() # A empty, unbound form
+    def form_valid(self, form):
+        form.save()
 
-    # Load documents for the list page
-    images = Imageview.objects.all()
+        return super(UploadView, self).form_valid(form)
 
-    # Render list page with the documents and the form
-    return render_to_response(
-        'imageview/list.html',
-        {'images': images, 'form': form},
-        context_instance=RequestContext(request)
-    )
+
+class MainView(ListView):
+    template_name = 'imageview/list.html'
+    model = Image

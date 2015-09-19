@@ -37,10 +37,15 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    'debug_toolbar',
+    "django_extensions",
+    'imagekit',
+    "taggit",
+    "bootstrap3",
+
     # MY APPS
     'imageview',
-    
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,3 +111,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+TAGGIT_CASE_INSENSITIVE = True
