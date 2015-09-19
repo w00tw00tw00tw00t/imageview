@@ -1,11 +1,16 @@
 {% extends 'bootstrap3/bootstrap3.html' %}
-
+{% load staticfiles %}
 {% block bootstrap3_title %}{% block title %}{% endblock %}{% endblock %}
 
 {% block bootstrap3_extra_head %}
     <link rel="stylesheet"
           href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/css/ripples.min.css">
-    <style>body{margin-top: 40px;}</style>
+
+    <style>
+        body {
+            margin-top: 40px;
+        }
+    </style>
 {% endblock %}
 
 {% block bootstrap3_extra_script %}

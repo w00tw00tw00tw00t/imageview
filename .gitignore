@@ -120,3 +120,4 @@ target/
 
 *.sqlite3
 media/
+static/
