@@ -2,6 +2,7 @@ from django.core.files.storage import FileSystemStorage
 import os
 
 
+# Credits http://stackoverflow.com/a/15900958
 # noinspection PyAbstractClass
 class MediaFileSystemStorage(FileSystemStorage):
     def get_available_name(self, name, max_length=None):

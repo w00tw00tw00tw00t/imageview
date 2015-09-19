@@ -1,4 +1,3 @@
-import os
 from django.db import models
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
@@ -33,10 +32,10 @@ class Image(models.Model):
 
     def image_tag(self):
         # noinspection PyUnresolvedReferences
-        return u'<img src="%s" />' % self.thumbnail.url
+        return u'<a href="%s" target="_blank"><img src="%s" /></a>' % (self.image_file.url, self.thumbnail.url)
 
     image_tag.short_description = 'Image'
     image_tag.allow_tags = True
 
     def __str__(self):
-        return self.image_file.name.split('/')[-1]
+        return self.image_file.name
