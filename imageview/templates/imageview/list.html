@@ -1,31 +1,24 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Minimal Django File Upload Example</title>   
-    </head>
-    <body>
-    <!-- List of uploaded documents -->
-    {% if images %}
-        <ul>
-        {% for image in images %}
-            <li><img src="{{ imageview.thumbnail.url }}"><a href="{{ imageview.imagefile.url }}">{{ imageview.imagefile.name }}</a></img></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No Images.</p>
-    {% endif %}
+{% extends 'imageview/base.html' %}
+{% block content %}
+    <h1>Overview
+        <small>
+            // {{ object_list|length }} images in the DB. <a href="{% url 'upload' %}">Upload a new image.</a>
+        </small>
+    </h1>
+    {% for image in object_list %}
+        <div class="col-md-2">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="{{ image.image_file.url }}"><img src="{{ image.thumbnail.url }}"
+                                                              class="img-responsive img-rounded"/></a>
+                </div>
+                <div class="panel-footer">
+                    {% for tag in image.tags.all %}
+                        {{ tag }}
+                    {% endfor %}
 
-        <!-- Upload form. Note enctype attribute! -->
-        <form action="{% url 'list' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <p>{{ form.non_field_errors }}</p>
-            <p>{{ form.imagefile.label_tag }} {{ form.imagefile.help_text }}</p>
-            <p>
-                {{ form.imagefile.errors }}
-                {{ form.imagefile }}
-            </p>
-            <p><input type="submit" value="Upload" /></p>
-        </form>
-    </body>
-</html> 
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
