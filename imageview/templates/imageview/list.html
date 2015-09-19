@@ -14,9 +14,8 @@
                 </div>
                 <div class="panel-footer">
                     {% for tag in image.tags.all %}
-                        {{ tag }}
+                        <span class="label label-default">{{ tag|lower }}</span>
                     {% endfor %}
-
                 </div>
             </div>
         </div>
