@@ -1,5 +1,6 @@
 from django.views.generic.edit import FormView
 from django.views.generic import ListView
+from taggit.models import Tag
 from .forms import ImageForm
 from .models import Image
 
@@ -18,3 +19,9 @@ class UploadView(FormView):
 class MainView(ListView):
     template_name = 'imageview/list.html'
     model = Image
+
+    def get_context_data(self, **kwargs):
+        context = super(MainView, self).get_context_data(**kwargs)
+        context.update({"tags": Tag.objects.all()})
+
+        return context

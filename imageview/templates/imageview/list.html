@@ -5,19 +5,40 @@
             // {{ object_list|length }} images in the DB. <a href="{% url 'upload' %}">Upload a new image.</a>
         </small>
     </h1>
-    {% for image in object_list %}
-        <div class="col-md-2">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <a href="{{ image.image_file.url }}"><img src="{{ image.thumbnail.url }}"
-                                                              class="img-responsive img-rounded"/></a>
-                </div>
-                <div class="panel-footer">
-                    {% for tag in image.tags.all %}
-                        <span class="label label-default">{{ tag|lower }}</span>
-                    {% endfor %}
+    <div class="col-md-2">
+        <span class="label label-success" onclick="showAllImages()">Show all</span>
+    {% for tag in tags.all %}
+        <span class="tag label label-success">{{ tag }}</span>
+    {% endfor %}
+    </div>
+    <div class="col-md-10" id="image_objects">
+        {% for image in object_list %}
+            <div class="image_object col-md-2" data-tags="{{ image.tags.all|join:', ' }}">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <a href="{{ image.image_file.url }}"><img src="{{ image.thumbnail.url }}"
+                                                                  class="img-responsive img-rounded"/></a>
+                    </div>
+                    <div class="panel-footer">
+                        {% for tag in image.tags.all %}
+                            <span class="label label-default">{{ tag|lower }}</span>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block extra_script %}
+    <script>
+    $('.tag').on('click', function() {
+        $('div.image_object').hide();
+        $('div.image_object[data-tags*="' + $(this).html() + '"]').show();
+    });
+
+    function showAllImages() {
+        $('.image_object').show();
+    }
+    </script>
 {% endblock %}
